@@ -1,0 +1,27 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ShopApp.Views.HelpSupportPage"
+             xmlns:views="clr-namespace:ShopApp.Views"
+             Title="HelpSupportPage">
+
+    <ContentPage.Resources>
+        <views:HelpSupportData x:Key="data" VisitasPendientes="5"/>
+    </ContentPage.Resources>
+
+    
+    
+    <Grid RowDefinitions="Auto,*">
+        <Label
+        Text="{Binding Source={StaticResource data},
+        Path=VisitasPendientes,
+        Mode=OneWay}"
+        />
+
+        <CollectionView
+        Grid.Row="1"
+        SelectionMode="Single"
+        SelectedItem="{Binding ClienteSeleccionado, Mode=TwoWay}"
+        ItemsSource="{Binding Clients, Mode=OneWay}"/>
+    </Grid>
+
+</ContentPage>
