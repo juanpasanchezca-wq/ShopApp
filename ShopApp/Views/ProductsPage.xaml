@@ -7,10 +7,11 @@
 
     <Shell.SearchHandler>
         <handlers:ProductoBusquedaHandler
-        Placeholder="Buscar producto"
-        DisplayMemberName="Nombre"
-        ShowsResults="True"
-        />
+            Placeholder="Buscar producto"
+            DisplayMemberName="Nombre"
+            ShowsResults="True"
+            ItemTemplate="{StaticResource ProductDataTemplate}"
+            />  
     </Shell.SearchHandler>
 
     <VerticalStackLayout x:Name="container">

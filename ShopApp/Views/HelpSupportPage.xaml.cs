@@ -3,7 +3,6 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 
 namespace ShopApp.Views;
-
 public partial class HelpSupportPage : ContentPage
 {
 	public HelpSupportPage()
@@ -13,15 +12,13 @@ public partial class HelpSupportPage : ContentPage
 
     private void Button_Clicked(object sender, EventArgs e)
     {
-        var dataObject = Resources["data"] as HelpSupportData;
+        var dataObject = BindingContext as HelpSupportData;
         dataObject.VisitasPendientes = 30;
     }
 }
 
 public class HelpSupportData : BindingUtilObject
 {
-    //public int VisitasPendientes { get; set; }
-
     public HelpSupportData()
     {
         var database = new ShopDbContext();
