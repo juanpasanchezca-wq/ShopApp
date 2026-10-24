@@ -10,6 +10,7 @@ namespace ShopApp.DataAcces
         public DbSet<Category> Categories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Client> Clients { get; set; }
+        public DbSet<Compra> Compras { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -42,6 +43,8 @@ namespace ShopApp.DataAcces
                 new Client(1, "Jose Martinez", "Carrera 1 54 12"),
                 new Client(2, "Ronaldo Nazario", "Calle 44 12 32")
             );
+
+            modelBuilder.Entity<Compra>().HasNoKey();
         }
     }
 
@@ -53,4 +56,5 @@ namespace ShopApp.DataAcces
     }
 
     public record Client(int Id, string Nombre, string Direccion);
+    public record Compra(int ClientId, int ProductId, int Cantidad);
 }
