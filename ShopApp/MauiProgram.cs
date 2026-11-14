@@ -26,6 +26,9 @@ namespace ShopApp
             builder.Services.AddTransient<HelpSupportDetailViewModel>();
             builder.Services.AddTransient<HelpSupportDetailPage>();
 
+            builder.Services.AddSingleton<IDatabaseRutaService, DatabaseRutaService>();
+            builder.Services.AddDbContext<ShopOutDbContext>();
+
             var dbContext = new ShopDbContext();
             dbContext.Database.EnsureCreated();
             dbContext.Dispose();

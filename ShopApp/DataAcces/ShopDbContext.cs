@@ -56,5 +56,11 @@ namespace ShopApp.DataAcces
     }
 
     public record Client(int Id, string Nombre, string Direccion);
-    public record Compra(int ClientId, int ProductId, int Cantidad);
+    public record Compra(
+        int ClienteId, 
+        int ProductId, 
+        int Cantidad, 
+        string ProductoNombre,
+        decimal ProductoPrecio,
+        decimal Total);
 }

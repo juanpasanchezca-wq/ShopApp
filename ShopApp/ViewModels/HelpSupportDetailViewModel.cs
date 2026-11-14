@@ -7,6 +7,8 @@ namespace ShopApp.ViewModels;
 
 public partial class HelpSupportDetailViewModel : ViewModelGlobal, IQueryAttributable
 {
+    private readonly ShopOutDbContext _outDbContext;
+
     [ObservableProperty]
     private int clienteId;
 
@@ -24,18 +26,26 @@ public partial class HelpSupportDetailViewModel : ViewModelGlobal, IQueryAttribu
 
     public ICommand AddCommand { get; set; }
 
-    public HelpSupportDetailViewModel()
+    public HelpSupportDetailViewModel(
+        ShopOutDbContext outDbContext)
     {
         var database = new ShopDbContext();
         Products = new ObservableCollection<Product>(database.Products);
-
         AddCommand = new MiComando(() =>
         {
-            if (ProductoSeleccionado == null) return;
-            var compra = new Compra(ClienteId, ProductoSeleccionado.Id, Cantidad);
+            var compra = new Compra(
+                ClienteId, 
+                ProductoSeleccionado.Id, 
+                Cantidad,
+                ProductoSeleccionado.Nombre,
+                ProductoSeleccionado.Precio,
+                productoSeleccionado.Precio * Cantidad
+                );
             Compras.Add(compra);
         },
         () => true);
+
+        _outDbContext = outDbContext;
     }
 
     public void ApplyQueryAttributes(IDictionary<string, object> query)
@@ -43,4 +53,21 @@ public partial class HelpSupportDetailViewModel : ViewModelGlobal, IQueryAttribu
         var clientId = int.Parse(query["id"].ToString());
         ClienteId = clientId;
     }
+    private async Task EnviarCompra()
+    {
+        _outDbContext.Database.EnsureCreated();
+
+        foreach (var item in Compras)
+        {
+            _outDbContext.Compras.Add(new CompraItem(
+                item.ClienteId, item.ProductId, item.Cantidad, item.ProductoPrecio));
+        }
+
+        await _outDbContext.SaveChangesAsync();
+
+        await Shell.Current.DisplayAlert("Éxito", "Compra guardada localmente en la base de datos SQLite", "OK");
+    }
+
+
+
 }
